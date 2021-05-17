@@ -11,7 +11,8 @@ defmodule Monitor.Application do
     children = [
       # Starts a worker by calling: Monitor.Worker.start_link(arg)
       # {Monitor.Worker, arg}
-      worker(CryptoMonitor.BTC, [10])
+      worker(CryptoMonitor.BTC, [10]),
+      worker(CryptoMonitor.ETH, [10])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
