@@ -7,14 +7,23 @@ defmodule Monitor.Application do
 
   @impl true
   def start(_type, _args) do
-    import Supervisor.Spec
     children = [
-      # Starts a worker by calling: Monitor.Worker.start_link(arg)
-      # {Monitor.Worker, arg}
-      worker(CryptoMonitor.BTC, [10]),
-      worker(CryptoMonitor.ETH, [10])
+      %{
+        id: CryptoMonitor.BTC,
+        start: {CryptoMonitor.BTC,:start_link, [10]},
+        type: :worker
+      },
+      %{
+        id: CryptoMonitor.ETH,
+        start: {CryptoMonitor.ETH,:start_link, [10]},
+        type: :worker
+      },
+      %{
+        id: CryptoMonitor.Bank,
+        start: {CryptoMonitor.Bank, :start_link, []},
+        type: :worker
+      }
     ]
-
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Monitor.Supervisor]
