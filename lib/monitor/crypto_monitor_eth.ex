@@ -25,6 +25,7 @@ defmodule CryptoMonitor.ETH do
         response = HTTPotion.get "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,MXN"
         if response.status_code == 200 do
             %{"MXN" => _mxn, "USD" => usd} = Poison.decode!(response.body)
+            CryptoMonitor.Bank.update("eth", usd)
             usd
         else 
              current_value

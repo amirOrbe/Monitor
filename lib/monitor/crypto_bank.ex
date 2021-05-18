@@ -8,4 +8,12 @@ defmodule CryptoMonitor.Bank do
                                  "btc" => 0,
                                  "btc_qty" => 100_000} end, name: __MODULE__)
     end
+
+    def update(key, value) do
+        Agent.update(__MODULE__, &Map.put(&1, key, value))
+    end
+
+    def get(key) do
+        Agent.get(__MODULE__, &Map.get(&1, key))
+    end
 end
